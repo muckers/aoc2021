@@ -3,10 +3,55 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
+fn part_a( data : &Vec<String> ) -> u32 {
 
+    let mut hz : u32 = 0;
+    let mut vt : u32 = 0;
+
+    data.iter()
+    .for_each( |cstr| {
+
+        let (c,nstr) = cstr.split_at(cstr.find(' ').unwrap());
+        let n : u32 = nstr.trim().parse().unwrap();
+        match c {
+
+            "forward" => hz = hz + n,
+            "down" => vt = vt + n,
+            "up" => vt = vt - n,
+            _ => ()
+            
+        }
+    });
+    
+    hz * vt
+}
+
+fn part_b( data : &Vec<String> ) -> u32 {
+
+    let mut hz : u32 = 0;
+    let mut aim : u32 = 0;
+    let mut depth : u32 = 0;
+
+    data.iter()
+    .for_each( |cstr| {
+
+        let (c,nstr) = cstr.split_at(cstr.find(' ').unwrap());
+        let n : u32 = nstr.trim().parse().unwrap();
+        match c {
+
+            "forward" => { hz = hz + n; depth = depth + (n * aim) },
+            "down" => aim = aim + n,
+            "up" => aim = aim - n,
+            _ => ()
+            
+        }
+    });
+    
+    hz * depth
+}
 fn main() {
 
-    // let mut data : Vec<Vec<char>> = Vec::new();
+    let mut data : Vec<String> = Vec::new();
 
     // Read lines into a vector
     //
@@ -17,13 +62,14 @@ fn main() {
 
             if let Ok(l) = line {
                 if l.len() > 0 {
-                    // let row : Vec<char> = l.chars().collect();
-                    // data.push( row );
-                    println!( "{}", l );
+                    data.push( l );
                 }
             }
         }
     }
+
+    println!("part_a: {}", part_a( &data ) );
+    println!("part_b: {}", part_b( &data ) );
 }
 
 
