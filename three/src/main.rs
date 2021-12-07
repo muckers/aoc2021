@@ -43,16 +43,9 @@ fn get_dominant_bit( data : &Vec<String>, bit_pos : usize, cmp: fn(c:usize,l:usi
 
     // Get all the bits from the specified position
     //
-    let bits : Vec<char> = data
+    let ones : Vec<char> = data
     .iter()
     .map( |s| s.chars().nth( bit_pos ).unwrap())
-    .collect();
-
-    //  Now only the 1 bits
-    //
-    let ones : Vec<char> = bits
-    .clone()
-    .into_iter()
     .filter( |d| *d == '1' )
     .collect();
 
